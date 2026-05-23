@@ -1,59 +1,109 @@
 import turtle
 import math
 
-# Настройка экрана
-screen = turtle.Screen()
-screen.title("Интерактивная геометрическая программа")
-pen = turtle.Turtle()
+# Настройка окна и черепашки
+wn = turtle.Screen()
+wn.title("Продвинутая интерактивная геометрическая программа")
+wn.setup(width=900, height=700)
+drawer = turtle.Turtle()
+drawer.speed(0)  # Максимальная скорость для анимации
+drawer.hideturtle()
 
-# Функция для рисования квадрата
+# Функции для рисования фигур с анимацией
+def draw_line(length):
+    """Рисует линию длиной length с анимацией."""
+    drawer.pendown()
+    drawer.forward(length)
+    drawer.penup()
+
 def draw_square(side_length):
-    """Рисует квадрат со стороной side_length."""
+    """Рисует квадрат, используя функцию draw_line."""
     for _ in range(4):
-        pen.forward(side_length)
-        pen.right(90)
+        draw_line(side_length)
+        drawer.right(90)
 
-# Функция для рисования равностороннего треугольника
-def draw_equilateral_triangle(side_length):
-    """Рисует равносторонний треугольник со стороной side_length."""
-    for _ in range(3):
-        pen.forward(side_length)
-        pen.left(120)
-
-# Функция для рисования многоугольника с n сторонами
-def draw_polygon(sides, side_length):
-    """Рисует многоугольник с sides сторонами."""
+def draw_regular_polygon(sides, side_length):
+    """Рисует правильный многоугольник с расчетом угла."""
     angle = 360 / sides
     for _ in range(sides):
-        pen.forward(side_length)
-        pen.left(angle)
+        draw_line(side_length)
+        drawer.right(angle)
 
-# Функция для рисования многоугольника с расчетом стороны по радиусу
-def draw_circle_polygon(radius, sides):
-    """Рисует многоугольник, вписанный в окружность радиуса radius."""
-    side_length = 2 * radius * math.sin(math.pi / sides)
-    draw_polygon(sides, side_length)
+def draw_circle(radius):
+    """Рисует окружность с помощью turtle.circle."""
+    drawer.circle(radius)
 
-# Меню выбора
+def draw_star(size):
+    """Рисует пятиконечную звезду."""
+    for _ in range(5):
+        draw_line(size)
+        drawer.right(144)
+
+# Расчеты с помощью math
+def calculate_polygon_side_radius(sides, apothem_length):
+    """Вычисляет длину стороны многоугольника по апофеме и количеству сторон."""
+    angle = math.pi / sides
+    side_length = 2 * math.tan(angle) * apothem_length
+    return side_length
+
+def calculate_circle_area(radius):
+    """Вычисляет площадь окружности."""
+    return math.pi * radius ** 2
+
+# Меню выбора с расширенными опциями
 def main_menu():
-    print("Выберите фигуру:")
-    print("1. Квадрат")
-    print("2. Треугольник")
-    print("3. М regular polygon (многоугольник)")
-    choice = input("Введите номер: ")
+    while True:
+        print("\n--- Выберите действие ---")
+        print("1. Нарисовать квадрат")
+        print("2. Нарисовать правильный многоугольник")
+        print("3. Нарисовать окружность")
+        print("4. Нарисовать звезду")
+        print("5. Расчет площади окружности")
+        print("6. Выйти")
+        choice = input("Введите номер: ")
 
-    if choice == '1':
-        length = int(input("Введите длину стороны: "))
-        draw_square(length)
-    elif choice == '2':
-        length = int(input("Введите длину стороны: "))
-        draw_equilateral_triangle(length)
-    elif choice == '3':
-        sides = int(input("Введите количество сторон: "))
-        radius = float(input("Введите радиус вписанной окружности: "))
-        draw_circle_polygon(radius, sides)
-    else:
-        print("Некорректный выбор.")
+        if choice == '1':
+            size = float(input("Введите длину стороны квадрата: "))
+            drawer.clear()
+            drawer.penup()
+            drawer.goto(-size/2, -size/2)  # Центрирование
+            drawer.pendown()
+            draw_square(size)
+        elif choice == '2':
+            sides = int(input("Введите число сторон: "))
+            apothem = float(input("Введите апофему (расстояние от центра до стороны): "))
+            side_length = calculate_polygon_side_radius(sides, apothem)
+            drawer.clear()
+            drawer.penup()
+            drawer.goto(0, -apothem)  # Центрирование
+            drawer.setheading(0)
+            drawer.pendown()
+            draw_regular_polygon(sides, side_length)
+        elif choice == '3':
+            radius = float(input("Введите радиус окружности: "))
+            drawer.clear()
+            drawer.penup()
+            drawer.goto(0, -radius)
+            drawer.setheading(0)
+            drawer.pendown()
+            draw_circle(radius)
+        elif choice == '4':
+            size = float(input("Введите размер звезды: "))
+            drawer.clear()
+            drawer.penup()
+            drawer.goto(0, 0)
+            drawer.setheading(0)
+            drawer.pendown()
+            draw_star(size)
+        elif choice == '5':
+            radius = float(input("Введите радиус окружности для расчета площади: "))
+            area = calculate_circle_area(radius)
+            print(f"Площадь окружности с радиусом {radius} равна {area:.2f}")
+        elif choice == '6':
+            print("Выход из программы.")
+            break
+        else:
+            print("Некорректный ввод, попробуйте снова.")
 
 main_menu()
 
