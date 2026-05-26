@@ -1,56 +1,41 @@
 import turtle
 import math
-
-# Настройка окна и черепашки
 wn = turtle.Screen()
 wn.title("Продвинутая интерактивная геометрическая программа")
 wn.setup(width=900, height=700)
 drawer = turtle.Turtle()
 drawer.speed(0)  # Максимальная скорость для анимации
 drawer.hideturtle()
-
-# Функции для рисования фигур с анимацией
 def draw_line(length):
     """Рисует линию длиной length с анимацией."""
     drawer.pendown()
     drawer.forward(length)
     drawer.penup()
-
 def draw_square(side_length):
     """Рисует квадрат, используя функцию draw_line."""
     for _ in range(4):
         draw_line(side_length)
         drawer.right(90)
-
 def draw_regular_polygon(sides, side_length):
     """Рисует правильный многоугольник с расчетом угла."""
     angle = 360 / sides
     for _ in range(sides):
         draw_line(side_length)
         drawer.right(angle)
-
 def draw_circle(radius):
-    """Рисует окружность с помощью turtle.circle."""
     drawer.circle(radius)
-
 def draw_star(size):
     """Рисует пятиконечную звезду."""
     for _ in range(5):
         draw_line(size)
         drawer.right(144)
-
-# Расчеты с помощью math
 def calculate_polygon_side_radius(sides, apothem_length):
     """Вычисляет длину стороны многоугольника по апофеме и количеству сторон."""
     angle = math.pi / sides
     side_length = 2 * math.tan(angle) * apothem_length
     return side_length
-
 def calculate_circle_area(radius):
-    """Вычисляет площадь окружности."""
     return math.pi * radius ** 2
-
-# Меню выбора с расширенными опциями
 def main_menu():
     while True:
         print("\n--- Выберите действие ---")
@@ -61,7 +46,6 @@ def main_menu():
         print("5. Расчет площади окружности")
         print("6. Выйти")
         choice = input("Введите номер: ")
-
         if choice == '1':
             size = float(input("Введите длину стороны квадрата: "))
             drawer.clear()
@@ -108,3 +92,4 @@ def main_menu():
 main_menu()
 
 turtle.done()
+
