@@ -45,7 +45,7 @@ def main_menu():
             size = float(input("Введите длину стороны квадрата: "))
             drawer.clear()
             drawer.penup()
-            drawer.goto(-size/2, -size/2)  # Центрирование
+            drawer.goto(-size/2, -size/2)  
             drawer.pendown()
             draw_square(size)
         elif choice == '2':
@@ -54,7 +54,7 @@ def main_menu():
             side_length = calculate_polygon_side_radius(sides, apothem)
             drawer.clear()
             drawer.penup()
-            drawer.goto(0, -apothem)  # Центрирование
+            drawer.goto(0, -apothem) 
             drawer.setheading(0)
             drawer.pendown()
             draw_regular_polygon(sides, side_length)
