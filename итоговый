@@ -4,20 +4,17 @@ wn = turtle.Screen()
 wn.title("Продвинутая интерактивная геометрическая программа")
 wn.setup(width=900, height=700)
 drawer = turtle.Turtle()
-drawer.speed(0)  # Максимальная скорость для анимации
+drawer.speed(0) 
 drawer.hideturtle()
 def draw_line(length):
-    """Рисует линию длиной length с анимацией."""
     drawer.pendown()
     drawer.forward(length)
     drawer.penup()
 def draw_square(side_length):
-    """Рисует квадрат, используя функцию draw_line."""
     for _ in range(4):
         draw_line(side_length)
         drawer.right(90)
 def draw_regular_polygon(sides, side_length):
-    """Рисует правильный многоугольник с расчетом угла."""
     angle = 360 / sides
     for _ in range(sides):
         draw_line(side_length)
@@ -25,12 +22,10 @@ def draw_regular_polygon(sides, side_length):
 def draw_circle(radius):
     drawer.circle(radius)
 def draw_star(size):
-    """Рисует пятиконечную звезду."""
     for _ in range(5):
         draw_line(size)
         drawer.right(144)
 def calculate_polygon_side_radius(sides, apothem_length):
-    """Вычисляет длину стороны многоугольника по апофеме и количеству сторон."""
     angle = math.pi / sides
     side_length = 2 * math.tan(angle) * apothem_length
     return side_length
